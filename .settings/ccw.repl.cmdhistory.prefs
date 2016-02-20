@@ -1,0 +1,2 @@
+cmdhistory=["(+ 1 2)" "(foo \\"test\\")" "(all)" "(all [])" "(all)" "(t1)" "(all-ns)" "(all)" "((into [] (sql/query spec [\\"select * from note order by date desc\\"])))" "((into [] (clojure.java.jdbc/query spec [\\"select * from note order by date desc\\"])))" "(all)"]
+eclipse.preferences.version=1
