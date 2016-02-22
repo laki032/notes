@@ -11,5 +11,5 @@
 (defn all []
   (into [] (sql/query spec ["select * from note order by date desc"])))
 
-(defn create [shout]
-  (sql/insert! spec :note [:body] [shout]))
+(defn create [n]
+  (sql/insert! spec :note [:body] [n]))

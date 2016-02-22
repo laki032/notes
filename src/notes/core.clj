@@ -1,6 +1,9 @@
-(ns notes.core)
+(ns notes.core
+  (:use compojure.core)
+  (:require [compojure.handler :as handler]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn index []
+  "<h2>Hello World</h2>")
+
+(defroutes app
+  (GET "/" [] (index )))
