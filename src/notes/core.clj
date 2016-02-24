@@ -1,9 +1,19 @@
 (ns notes.core
-  (:use compojure.core)
-  (:require [compojure.handler :as handler]))
+  (:require [compojure.core :refer [defroutes GET POST]]
+            [clojure.string :as str]
+            [ring.util.response :as ring]
+            [notes.view :as view]
+            [notes.db :as db]))
 
 (defn index []
-  "<h2>Hello World</h2>")
+  (view/index (db/all)))
 
-(defroutes app
-  (GET "/" [] (index )))
+(defn create
+  [note]
+  (when-not (str/blank? note)
+    (db/create note))
+  (ring/redirect "/"))
+
+(defroutes routes
+  (GET "/" [] (index))
+  (POST "/" [note] (create note)))
