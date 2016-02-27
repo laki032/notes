@@ -13,8 +13,8 @@
                  (form/submit-button "save"))])
 
 (defn display-notes [notes]
-  [:div {:class "all"}
-   [:table {:class "table"} ;(:style "border: 0; width: 90%")
+  [:div 
+   [:table {:class "table"}
          [:th {:class "header"} "id"]
          [:th {:class "header"} "date"]
          [:th {:class "header"} "note"]
@@ -25,8 +25,6 @@
          [:td {:class "cell"} (h (:text note))]
       ]) notes)]])
 
-  
-   
 (defn index [notes]
   (layout/common "My notes"
                  (display-notes notes)

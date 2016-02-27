@@ -13,3 +13,9 @@
 
 (defn create [n]
   (sql/insert! spec :note [:text] [n]))
+
+(defn update [n]
+ (sql/update! spec :note
+            {:text (get	n :text)}
+            ["id = ?" (get	n :id)]))
+
