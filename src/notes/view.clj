@@ -8,18 +8,26 @@
   [:div 
    (form/form-to [:post "/"]
                  (anti-forgery/anti-forgery-field)
-                 (form/label "note" "New notes:")
-                 (form/text-area "note")
-                 (form/submit-button "insert"))])
+                 (form/label "note" "New note:")
+                 (form/text-field "note")
+                 (form/submit-button "save"))])
 
 (defn display-notes [notes]
-  [:div
-   (map
-    (fn [note] [:h2 {:class "note"} (h (:body note))])
-    notes)])
+  [:div {:class "all"}
+   [:table {:class "table"} ;(:style "border: 0; width: 90%")
+         [:th {:class "header"} "id"]
+         [:th {:class "header"} "date"]
+         [:th {:class "header"} "note"]
+   (map 
+    (fn [note][:tr {:class "row"} 
+         [:td {:class "cell"} (h (:id note))]
+         [:td {:class "cell"} (h (:date note))]
+         [:td {:class "cell"} (h (:text note))]
+      ]) notes)]])
 
+  
+   
 (defn index [notes]
   (layout/common "My notes"
-                 (note-form)
-                 [:div {:class "clear"}]
-                 (display-notes notes)))
+                 (display-notes notes)
+                 (note-form)))
