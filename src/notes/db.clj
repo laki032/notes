@@ -11,11 +11,17 @@
 (defn all []
   (into [] (sql/query spec ["select * from note order by date desc"])))
 
+(defn get-by-id [id]
+  (into [] (sql/query spec ["select * from note where id = ?" id])))
+
 (defn create [n]
   (sql/insert! spec :note [:text] [n]))
 
-(defn update [n]
+(defn update [id & n]
  (sql/update! spec :note
-            {:text (get	n :text)}
-            ["id = ?" (get	n :id)]))
+            {:text n}
+            ["id = ?" id]))
 
+(defn delete [id]
+ (sql/delete! spec :note
+            ["id = ?" id]))

@@ -8,12 +8,28 @@
 (defn index []
   (view/index (db/all)))
 
-(defn create
-  [note]
+(defn create [note]
   (when-not (str/blank? note)
     (db/create note))
   (ring/redirect "/"))
 
+(defn update [id]
+  (when-not (str/blank? (str id ""))
+    (view/update (db/get-by-id id))))
+
+(defn save-update [id & n]
+  (when-not (str/blank? id)
+    (db/update id n))
+  (ring/redirect "/"))
+
+(defn delete [id]
+  (when-not (str/blank? id)
+    (db/delete id))
+  (ring/redirect "/"))
+
 (defroutes routes
   (GET "/" [] (index))
-  (POST "/" [note] (create note)))
+  (POST "/" [note] (create note))
+  (POST "/update/:id" [id & note] (save-update id note))
+  (GET "/update/:id" [id] (update id))
+  (GET "/delete/:id" [id] (delete id)))

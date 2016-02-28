@@ -1,7 +1,7 @@
 (ns notes.layout
   (:require [hiccup.page :as h]))
 
-(defn common [title & body]
+(defn common [header & body]
   (h/html5
    [:head
     [:meta {:charset "utf-8"}]
@@ -13,8 +13,8 @@
     ]
    [:body
     [:div {:class "header"}
-     [:h1 {:class "container"} "All notes: "]]
+     [:h1 {:class "container"} header]]
     [:div {:id "content" :class "container"} body]]))
 
 (defn error []
-  (common [:div {:id "error"} "The page you requested could not be found"]))
+  (common "NOT FOUND" [:div {:id "error"} "The page you requested could not be found"]))
