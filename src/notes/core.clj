@@ -30,6 +30,6 @@
 (defroutes routes
   (GET "/" [] (index))
   (POST "/" [note] (create note))
-  (POST "/update/" [id new-text] (save-update id new-text))
+  (POST "/update/" [id & other] (save-update id (get other :new-text)))
   (GET "/update/:id" [id] (update id))
   (GET "/delete/:id" [id] (delete id)))
