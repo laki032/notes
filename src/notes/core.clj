@@ -15,11 +15,11 @@
 
 (defn update [id]
   (when-not (str/blank? (str id ""))
-    (view/update (db/get-by-id id))))
+    (view/update id)))
 
-(defn save-update [id & n]
-  (when-not (str/blank? id)
-    (db/update id n))
+(defn save-update [id & text]
+  (when-not (str/blank? (str id ""))
+    (db/update id text))
   (ring/redirect "/"))
 
 (defn delete [id]
@@ -30,6 +30,6 @@
 (defroutes routes
   (GET "/" [] (index))
   (POST "/" [note] (create note))
-  (POST "/update/:id" [id & note] (save-update id note))
+  (POST "/update/" [id new-text] (save-update id new-text))
   (GET "/update/:id" [id] (update id))
   (GET "/delete/:id" [id] (delete id)))

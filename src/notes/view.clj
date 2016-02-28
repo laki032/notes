@@ -18,15 +18,15 @@
          [:th {:class "header"} "id"]
          [:th {:class "header"} "date"]
          [:th {:class "header"} "note"]
-         [:th {:class "header"} "update"]
          [:th {:class "header"} "delete"]
+         [:th {:class "header"} "update"]
    (map 
     (fn [note][:tr {:class "row"} 
          [:td {:class "cell"} (h (:id note))]
          [:td {:class "cell"} (h (:date note))]
          [:td {:class "cell"} (h (:text note))]
-         [:td {:class "cell"} [:a {:href (str "/update/" (h (:id note)))} "update"]]
          [:td {:class "cell"} [:a {:href (str "/delete/" (h (:id note)))} "delete"]]
+         [:td {:class "cell"} [:a {:href (str "/update/" (h (:id note)))} "update"]]
       ]) notes)]])
 
 (defn index [notes]
@@ -34,25 +34,12 @@
                  (display-notes notes)
                  (note-form)))
 
-(defn update-form [id]
-  [:div 
-   (form/form-to [:post (str "/update/" id)]
-                 (anti-forgery/anti-forgery-field)
-                 (form/label "note" "New text: ")
-                 (form/text-field "note")
-                 (form/submit-button "update"))])
-
-(defn display-note [note]
-  [:div (map (fn [note]
-      [:h3 (str "note with id: " (h (:id note)))
-       (str "<br/>")
-       (str "created on: " (h (:date note)))
-       (str "<br/>")
-       (str "previous text: " (h (:text note)))
-       (str "<br/>")
-       ]) note)])
-
-(defn update [note]
+(defn update [id]
   (layout/common "Update note" 
-                 (update-form (get note :id))
-                 (display-note note)))
+                 [:div (form/form-to 
+                         [:post "/update/"]
+                         (anti-forgery/anti-forgery-field)
+				                 (form/label "note" "New text: ")
+                         (form/hidden-field "id" (h id))
+				                 (form/text-field "new-text")
+				                 (form/submit-button "update"))]))
