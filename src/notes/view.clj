@@ -37,9 +37,9 @@
 (defn update [id]
   (layout/common "Update note" 
                  [:div (form/form-to 
-                         [:post "/update/"]
-                         (anti-forgery/anti-forgery-field)
+                         [:post "/saveupdate/"]
 				                 (form/label "note" "New text: ")
+				                 (form/text-field "note")
+				                 (form/submit-button "update")
                          (form/hidden-field "id" (h id))
-				                 (form/text-field "new-text")
-				                 (form/submit-button "update"))]))
+                         (anti-forgery/anti-forgery-field))]))
